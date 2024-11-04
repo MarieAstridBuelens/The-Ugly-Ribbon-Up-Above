@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SideSteps",
+                    "type": "Value",
+                    "id": "a802d335-cb1d-41a9-993d-54a4d8504137",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -70,28 +79,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
-                    "id": "e41ff32e-8d08-4f63-9141-137723738ef9",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "94b58423-5ad9-4e3f-b82a-16a27c80d33d",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "forward",
                     "id": "52e8312e-4537-4d1c-a929-2295047d5fe0",
                     "path": "<Keyboard>/upArrow",
@@ -105,11 +92,66 @@
                 {
                     "name": "backward",
                     "id": "c8e45569-86e6-4873-91dc-c43f7ac57840",
-                    "path": "",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "3D Vector",
+                    "id": "03c7bf8d-ad44-44f0-82e3-495f8b4884e1",
+                    "path": "3DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SideSteps",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "677246a5-cdd9-4a9e-b9e4-32754d881ef4",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SideSteps",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "ae40cb15-0eea-4a8e-a986-859824673743",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SideSteps",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "525ac967-b594-4aca-8581-d33c9d6df0a4",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SideSteps",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "b857a81c-d1b4-40da-8921-ee46bedfdffc",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SideSteps",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
