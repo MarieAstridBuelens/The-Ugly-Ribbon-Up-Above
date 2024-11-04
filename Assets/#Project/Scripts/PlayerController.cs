@@ -9,20 +9,24 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] InputActionAsset inputActions;
-    InputAction run;
+    [SerializeField] private float speed = 2f;
+    //InputAction run;
+    InputAction move;
     private NavMeshAgent agent;
 
     void OnEnable(){
         inputActions.FindActionMap("PlayerMap").Enable();
-        run = inputActions["Run"];
-        run.performed += OnSpace;
-        run.canceled += OnSpaceRelease;
+        // run = inputActions["Run"];
+        // run.performed += OnSpace;
+        // run.canceled += OnSpaceRelease;
+
+        move = inputActions["Move"];
     }
 
     void OnDisable(){
         inputActions.FindActionMap("PlayerMap").Disable();
-        run.performed -= OnSpace;
-        run.canceled -= OnSpaceRelease;
+        // run.performed -= OnSpace;
+        // run.canceled -= OnSpaceRelease;
     }
 
     void Start()
@@ -34,6 +38,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MoveControls();
         // //arrêt de la course
         // Keyboard keyboard = Keyboard.current;
         // if (keyboard.shiftKey.wasReleasedThisFrame){
@@ -42,20 +47,30 @@ public class PlayerController : MonoBehaviour
         // }
         
         //raycast destination selon souris
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//donne un rayon qui part de la caméra, traverse l'écran et continue dans le monde
-        RaycastHit hit;
-        //Debug.DrawRay(ray.origin, ray.direction * 2000f, Color.magenta, 1f);
-        if(Physics.Raycast(ray, out hit)){
-            agent.SetDestination(hit.point);
-        } //permet de faire rejoindre la souris, sans forcément cliquer
+        // Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//donne un rayon qui part de la caméra, traverse l'écran et continue dans le monde
+        // RaycastHit hit;
+        // //Debug.DrawRay(ray.origin, ray.direction * 2000f, Color.magenta, 1f);
+        // if(Physics.Raycast(ray, out hit)){
+        //     agent.SetDestination(hit.point);
+        //} //permet de faire rejoindre la souris, sans forcément cliquer
     }
 
-    void OnSpace(InputAction.CallbackContext context){
-        agent.speed *= 5;
+    
+    void MoveControls(){
+        Keyboard keyboard = Keyboard.current;
+        Vector3 moveAmount = move.ReadValue<Vector3>();
+        Debug.Log(moveAmount);
+
+        transform.position += new Vector3(moveAmount.x, moveAmount.y, moveAmount.z) * Time.deltaTime * speed;
+
     }
 
-    void OnSpaceRelease(InputAction.CallbackContext context){
-        agent.speed /= 5;
-    }
+    // void OnSpace(InputAction.CallbackContext context){
+    //     agent.speed *= 5;
+    // }
+
+    // void OnSpaceRelease(InputAction.CallbackContext context){
+    //     agent.speed /= 5;
+    // }
 }
 
