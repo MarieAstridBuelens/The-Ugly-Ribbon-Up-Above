@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     void MoveControls(){
         
         Vector3 moveAmount = move.ReadValue<Vector3>();
-        Debug.Log(moveAmount);
+        //Debug.Log(moveAmount);
 
         if(moveAmount == Vector3.zero) return; // SINONla direction indiquée va quand même donner un vectuer qui initie un mouvement !
 
