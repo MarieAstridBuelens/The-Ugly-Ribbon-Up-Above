@@ -31,8 +31,6 @@ public class PlayerController : MonoBehaviour
     float deathRayWarming;
     [SerializeField] private float deathRayLength = 30f;
 
-    [SerializeField] private GameObject objectHit = null;
-
     void OnEnable(){
         inputActions.FindActionMap("PlayerMap").Enable();
         // run = inputActions["Run"];
