@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -17,8 +19,15 @@ public class PlayerController : MonoBehaviour
     //InputAction run;
     InputAction move;
     InputAction sideSteps;
+    InputAction basicStrikeControl;
     private NavMeshAgent agent;
     Keyboard keyboard = Keyboard.current;
+    Mouse mouse = Mouse.current;
+    float leftClicked;
+    [SerializeField] private float rayLength = 10f;
+    private Color col = Color.blue;
+
+    [SerializeField] private GameObject objectHit = null;
 
     void OnEnable(){
         inputActions.FindActionMap("PlayerMap").Enable();
@@ -28,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
         move = inputActions["Move"];
         sideSteps = inputActions["SideSteps"];
+        basicStrikeControl = inputActions["BasicStrikeControl"];
     }
 
     void OnDisable(){
@@ -47,6 +57,8 @@ public class PlayerController : MonoBehaviour
     {
         MoveControls();
         SideControls();
+        BasicStrike();
+
         // //arrêt de la course
         // Keyboard keyboard = Keyboard.current;
         // if (keyboard.shiftKey.wasReleasedThisFrame){
@@ -98,5 +110,28 @@ public class PlayerController : MonoBehaviour
     // void OnSpaceRelease(InputAction.CallbackContext context){
     //     agent.speed /= 5;
     // }
+
+
+
+    public void BasicStrike(){
+        leftClicked = basicStrikeControl.ReadValue<float>();
+        if(leftClicked > 0){
+            Debug.Log("clicked!");
+            if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength)){
+                Debug.DrawRay(transform.position, transform.forward * rayLength, col);
+                if (hit.collider.tag == "Enemy"){
+                    Debug.Log("ARGH!");
+                    Destroy(hit.transform.gameObject);
+                }
+            }
+            leftClicked = 0;
+        }
+        
+    }
+
+    public void DeathRay(){
+        Destroy(gameObject);
+    }
+    
 }
 

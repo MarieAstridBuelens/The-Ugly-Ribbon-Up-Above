@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "BasicStrikeControl",
+                    "type": "Button",
+                    "id": "507b1650-ea54-44f0-adf4-9e20e89c7378",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -154,6 +163,17 @@
                     "action": "SideSteps",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "cbedff52-1230-49cd-a4e8-6982db81d9ba",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BasicStrikeControl",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
