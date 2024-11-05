@@ -20,12 +20,16 @@ public class PlayerController : MonoBehaviour
     InputAction move;
     InputAction sideSteps;
     InputAction basicStrikeControl;
+    InputAction deathRayControl;
     private NavMeshAgent agent;
     Keyboard keyboard = Keyboard.current;
     Mouse mouse = Mouse.current;
     float leftClicked;
     [SerializeField] private float rayLength = 10f;
     private Color col = Color.blue;
+
+    float deathRayWarming;
+    [SerializeField] private float deathRayLength = 30f;
 
     [SerializeField] private GameObject objectHit = null;
 
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
         move = inputActions["Move"];
         sideSteps = inputActions["SideSteps"];
         basicStrikeControl = inputActions["BasicStrikeControl"];
+        deathRayControl = inputActions["DeathRayControl"];
     }
 
     void OnDisable(){
@@ -58,6 +63,7 @@ public class PlayerController : MonoBehaviour
         MoveControls();
         SideControls();
         BasicStrike();
+        DeathRay();
 
         // //arrêt de la course
         // Keyboard keyboard = Keyboard.current;
@@ -130,7 +136,18 @@ public class PlayerController : MonoBehaviour
     }
 
     public void DeathRay(){
-        Destroy(gameObject);
+        deathRayWarming = deathRayControl.ReadValue<float>();
+        if(deathRayWarming > 0){
+            Debug.Log("DeathRay activated!");
+            if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength)){
+                Debug.DrawRay(transform.position, transform.forward * deathRayLength, col);
+                if (hit.collider.tag == "Enemy"){
+                    Debug.Log("ARGH! A DEATHRAY ATTACK!");
+                    Destroy(hit.transform.gameObject);
+                }
+            }
+            deathRayWarming = 0;
+        }
     }
     
 }
