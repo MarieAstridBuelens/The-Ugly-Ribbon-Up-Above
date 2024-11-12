@@ -360,6 +360,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad27276a9983724cbe7f48a3a6b531c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputActions: {fileID: 0}
+  speed: 1
+  turnSmoothTime: 0.1
+  turnSmoothVelocity: 0
+  cam: {fileID: 0}
+  rayLength: 10
+  deathRayLength: 30
 --- !u!1 &8555565815653411374
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,13 +394,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8555565815653411374}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5899632235506784259}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4557038776152795404
 MeshFilter:
   m_ObjectHideFlags: 0

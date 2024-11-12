@@ -24,11 +24,9 @@ public class PlayerController : MonoBehaviour
     private NavMeshAgent agent;
     Keyboard keyboard = Keyboard.current;
     Mouse mouse = Mouse.current;
-    float leftClicked;
     [SerializeField] private float rayLength = 10f;
     private Color col = Color.blue;
 
-    float deathRayWarming;
     [SerializeField] private float deathRayLength = 30f;
 
     void OnEnable(){
@@ -49,8 +47,13 @@ public class PlayerController : MonoBehaviour
         // run.canceled -= OnSpaceRelease;
     }
 
+
     void Start()
     {
+        //assign a callback for BasicStrike and DeathRay
+        basicStrikeControl.performed += BasicStrike;
+        deathRayControl.performed += DeathRay;
+
         agent = GetComponent<NavMeshAgent>();
 
     }
@@ -60,8 +63,6 @@ public class PlayerController : MonoBehaviour
     {
         MoveControls();
         SideControls();
-        BasicStrike();
-        DeathRay();
 
         // //arrêt de la course
         // Keyboard keyboard = Keyboard.current;
@@ -117,36 +118,37 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public void BasicStrike(){
-        leftClicked = basicStrikeControl.ReadValue<float>();
-        if(leftClicked > 0){
-            Debug.Log("clicked!");
-            if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength)){
-                Debug.DrawRay(transform.position, transform.forward * rayLength, col);
-                if (hit.collider.tag == "Enemy"){
-                    Debug.Log("ARGH!");
+    public void BasicStrike(InputAction.CallbackContext context){
+
+        Debug.Log("clicked!");
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength)){
+            Debug.DrawRay(transform.position, transform.forward * rayLength, col);
+            HealthManager enemyHp = hit.collider.GetComponent<HealthManager>();
+            if (enemyHp != null){
+                enemyHp.hp -= 1;
+                Debug.Log(enemyHp.hp);
+                if(enemyHp.hp <= 0){
                     Destroy(hit.transform.gameObject);
                 }
+                
             }
-            leftClicked = 0;
         }
         
     }
 
-    public void DeathRay(){
-        deathRayWarming = deathRayControl.ReadValue<float>();
-        if(deathRayWarming > 0){
-            Debug.Log("DeathRay activated!");
-            if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength)){
-                Debug.DrawRay(transform.position, transform.forward * deathRayLength, col);
-                if (hit.collider.tag == "Enemy"){
-                    Debug.Log("ARGH! A DEATHRAY ATTACK!");
-                    Destroy(hit.transform.gameObject);
-                }
+    public void DeathRay(InputAction.CallbackContext context){
+
+        Debug.Log("DeathRay activated!");
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength)){
+            Debug.DrawRay(transform.position, transform.forward * deathRayLength, col);
+            if (hit.collider.tag == "Enemy"){
+                Debug.Log("ARGH! A DEATHRAY ATTACK!");
+                Destroy(hit.transform.gameObject);
             }
-            deathRayWarming = 0;
         }
+            
     }
-    
 }
+    
+
 

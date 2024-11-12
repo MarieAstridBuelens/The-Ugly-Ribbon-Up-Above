@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.Examples;
 using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private int _hp = 10;
+    
+    public int hp
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        get {return _hp;}
+        set{
+            _hp = value;
+        }
         
     }
 }

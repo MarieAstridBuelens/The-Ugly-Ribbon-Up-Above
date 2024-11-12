@@ -8,7 +8,8 @@ public class RaycastLineRenderer : MonoBehaviour
 {
     internal PlayerController playerController;
     private LineRenderer line;
-    [SerializeField] private float range;
+    [SerializeField] private int rayLength = 30;
+
     
     // Start is called before the first frame update
     void Start()
@@ -19,16 +20,21 @@ public class RaycastLineRenderer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        line.SetPosition(0, transform.position);
-        // if(Physics.Raycast(transform.position, playerController.moveDirection, out RaycastHit hit, range)){
-        //     line.SetPosition(1, hit.point); //propriété de raycastHit. Hit.point, c'est le point d'impact du rayon avec le collider
-        //     line.startColor = Color.red;
-        //     line.endColor = Color.red;
-        // }
-        // else{
-        //     line.SetPosition(1, transform.position + transform.forward * range);
-        //     line.startColor = Color.green;
-        //     line.endColor = Color.green;
-        // }
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength)){
+            if(hit.collider.tag == "Enemy"){
+                line.enabled = true;
+                line.SetPosition(0, transform.position);
+                line.SetPosition(1, hit.point); //propriété de raycastHit. Hit.point, c'est le point d'impact du rayon avec le collider
+                line.startColor = Color.red;
+                line.endColor = Color.red;
+            }
+            else{
+                line.enabled = false;
+            }
+        }
+        else{
+            line.enabled = false;
+        }
+        
     }
 }
