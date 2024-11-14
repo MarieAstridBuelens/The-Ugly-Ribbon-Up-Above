@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] InputActionAsset inputActions;
     [SerializeField] private float speed = 1f;
-    [SerializeField] private float throwSpeed = 1f;
+    [SerializeField] private float throwSpeed = 0.3f;
 
     [SerializeField] private float turnSmoothTime = 0.1f;
     [SerializeField] private float turnSmoothVelocity;
