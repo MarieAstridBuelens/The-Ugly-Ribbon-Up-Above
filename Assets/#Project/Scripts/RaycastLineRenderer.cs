@@ -15,6 +15,7 @@ public class RaycastLineRenderer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
         //deathRayLine = GetComponent<LineRenderer>();
     }
 

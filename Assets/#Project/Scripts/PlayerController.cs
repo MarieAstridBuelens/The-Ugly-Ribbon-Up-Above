@@ -31,11 +31,12 @@ public class PlayerController : MonoBehaviour
     Mouse mouse = Mouse.current;
     [SerializeField] private float rayLength = 10f;
     private Color col = Color.blue;
-    private Transform destructible;
-    private bool canDeckOnShoulder = true;
+    internal Transform destructible;
+    [SerializeField] internal Transform resetDestructible;
+    internal bool canDeckOnShoulder = true;
     [SerializeField] private LineRenderer throwLine;
     [SerializeField] private Color throwCol = Color.blue;
-    private bool movingToTarget = false;
+    internal bool movingToTarget = false;
 
     internal bool canDeathRay = true;
 
@@ -229,24 +230,15 @@ public class PlayerController : MonoBehaviour
 
     public void ThrowingToTarget(){
         if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength)){
-            destructible.transform.position = Vector3.MoveTowards(destructible.transform.position, hit.point, throwSpeed);
-            throwLine.enabled = false;
-            Collider collider = destructible.GetComponent<Collider>();
-            
-                movingToTarget = false;
-            }
+            Vector3 placeToHit = hit.point + new Vector3(0, 2, 0);
+            destructible.transform.position = Vector3.MoveTowards(destructible.transform.position, placeToHit, throwSpeed); 
         }
-        
+        throwLine.enabled = false;
         
     }
 
-    // throwLine.enabled = false;
-    // if(destructible.transform.GetComponent<NavMeshAgent>()){
-    //     NavMeshAgent agent = destructible.transform.GetComponent<NavMeshAgent>();
-    //     agent.enabled = true;
-    // }
-    // canDeathRay = true;
-    // canDeckOnShoulder = true;
+    
+
 }
     
 
