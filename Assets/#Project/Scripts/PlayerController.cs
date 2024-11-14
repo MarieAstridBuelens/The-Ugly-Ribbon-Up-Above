@@ -8,26 +8,40 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(NavMeshAgent))]
 
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] InputActionAsset inputActions;
     [SerializeField] private float speed = 1f;
+    [SerializeField] private float throwSpeed = 1f;
+
     [SerializeField] private float turnSmoothTime = 0.1f;
     [SerializeField] private float turnSmoothVelocity;
     [SerializeField] private Transform cam;
+    [SerializeField] private Transform shoulder;
 
     //InputAction run;
     InputAction move;
     InputAction sideSteps;
     InputAction basicStrikeControl;
     InputAction deathRayControl;
+    InputAction telekinesis;
     private NavMeshAgent agent;
     Keyboard keyboard = Keyboard.current;
     Mouse mouse = Mouse.current;
     [SerializeField] private float rayLength = 10f;
     private Color col = Color.blue;
+    private Transform destructible;
+    private bool canDeckOnShoulder = true;
+    [SerializeField] private LineRenderer throwLine;
+    [SerializeField] private Color throwCol = Color.blue;
+    private bool movingToTarget = false;
+
+    internal bool canDeathRay = true;
 
     [SerializeField] private float deathRayLength = 30f;
+    [SerializeField] private float telekinesisLength = 30f;
+    [SerializeField] private float throwLength = 60f;
 
     void OnEnable(){
         inputActions.FindActionMap("PlayerMap").Enable();
@@ -39,6 +53,7 @@ public class PlayerController : MonoBehaviour
         sideSteps = inputActions["SideSteps"];
         basicStrikeControl = inputActions["BasicStrikeControl"];
         deathRayControl = inputActions["DeathRayControl"];
+        telekinesis = inputActions["Telekinesis"];
     }
 
     void OnDisable(){
@@ -53,6 +68,10 @@ public class PlayerController : MonoBehaviour
         //assign a callback for BasicStrike and DeathRay
         basicStrikeControl.performed += BasicStrike;
         deathRayControl.performed += DeathRay;
+        telekinesis.performed += TelekinesisActived;
+        telekinesis.canceled += TelekinesisThrow;
+
+        throwLine.enabled = false;
 
         agent = GetComponent<NavMeshAgent>();
 
@@ -63,6 +82,14 @@ public class PlayerController : MonoBehaviour
     {
         MoveControls();
         SideControls();
+
+        if(!canDeckOnShoulder){
+            CheckThrowLine();
+        }
+
+        if(movingToTarget){
+            ThrowingToTarget();
+        }
 
         // //arrêt de la course
         // Keyboard keyboard = Keyboard.current;
@@ -139,7 +166,7 @@ public class PlayerController : MonoBehaviour
     public void DeathRay(InputAction.CallbackContext context){
 
         Debug.Log("DeathRay activated!");
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength)){
+        if( canDeathRay && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength)){
             Debug.DrawRay(transform.position, transform.forward * deathRayLength, col);
             if (hit.collider.tag == "Enemy"){
                 Debug.Log("ARGH! A DEATHRAY ATTACK!");
@@ -148,6 +175,78 @@ public class PlayerController : MonoBehaviour
         }
             
     }
+
+    public void TelekinesisActived(InputAction.CallbackContext context){
+        Debug.Log("You're now in the Telekinesis mode!");
+        if(canDeckOnShoulder && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, telekinesisLength)){
+            Debug.DrawRay(transform.position, transform.forward * telekinesisLength, col);
+            
+            if(hit.transform.GetComponent<NavMeshAgent>()){
+                NavMeshAgent agent = hit.transform.GetComponent<NavMeshAgent>();
+                agent.enabled = false;
+            }
+
+            destructible = hit.transform.GetComponent<Transform>();
+            destructible.SetParent(shoulder);
+            destructible.transform.localPosition = new Vector3(0,0,0);
+            canDeckOnShoulder = false;
+            canDeathRay = false;
+
+            
+
+            // Vector3 pos =  destructible.position;
+            // pos.y = transform.position.y + 4;
+            // pos.x = transform.position.x + 2;
+            // pos.z = transform.position.z;
+            // destructible.position = pos;
+            
+            //penser à une rotation de 90°
+
+        }
+
+    }
+
+    public void CheckThrowLine(){
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength)){
+                Debug.DrawRay(transform.position, transform.forward * throwLength, col);
+                throwLine.enabled = true;
+                throwLine.startColor = throwCol;
+                throwLine.endColor = throwCol;
+                throwLine.SetPosition(0, shoulder.position);
+                throwLine.SetPosition(1, hit.point);
+            }
+        else{
+            throwLine.enabled = false;
+        }
+    }
+
+    public void TelekinesisThrow(InputAction.CallbackContext context){
+        Debug.Log("Take that!");
+        destructible.SetParent(null);
+        movingToTarget = true; 
+        
+    }
+
+    public void ThrowingToTarget(){
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength)){
+            destructible.transform.position = Vector3.MoveTowards(destructible.transform.position, hit.point, throwSpeed);
+            throwLine.enabled = false;
+            Collider collider = destructible.GetComponent<Collider>();
+            
+                movingToTarget = false;
+            }
+        }
+        
+        
+    }
+
+    // throwLine.enabled = false;
+    // if(destructible.transform.GetComponent<NavMeshAgent>()){
+    //     NavMeshAgent agent = destructible.transform.GetComponent<NavMeshAgent>();
+    //     agent.enabled = true;
+    // }
+    // canDeathRay = true;
+    // canDeckOnShoulder = true;
 }
     
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 469171712739722700}
   - component: {fileID: 6883778553619306026}
   - component: {fileID: 5334923480748234911}
+  - component: {fileID: 4917253117546832668}
   m_Layer: 0
   m_Name: Dave
   m_TagString: Untagged
@@ -142,6 +143,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86127270615ba944e8cfefc7b2a98fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &4917253117546832668
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212262217567245201}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8707109227249687110
 GameObject:
   m_ObjectHideFlags: 0

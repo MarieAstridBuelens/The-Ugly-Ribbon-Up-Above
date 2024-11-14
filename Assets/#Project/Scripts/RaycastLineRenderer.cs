@@ -2,38 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))] 
+
 
 public class RaycastLineRenderer : MonoBehaviour
 {
     internal PlayerController playerController;
-    private LineRenderer line;
+    [SerializeField] private LineRenderer deathRayLine;
+    [SerializeField] private Color deathRayCol = Color.green;
     [SerializeField] private int rayLength = 30;
 
     
     // Start is called before the first frame update
     void Start()
     {
-        line = GetComponent<LineRenderer>();
+        //deathRayLine = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength)){
+        if(playerController.canDeathRay && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength)){
             if(hit.collider.tag == "Enemy"){
-                line.enabled = true;
-                line.SetPosition(0, transform.position);
-                line.SetPosition(1, hit.point); //propriété de raycastHit. Hit.point, c'est le point d'impact du rayon avec le collider
-                line.startColor = Color.red;
-                line.endColor = Color.red;
+                deathRayLine.enabled = true;
+                deathRayLine.SetPosition(0, transform.position);
+                deathRayLine.SetPosition(1, hit.point); //propriété de raycastHit. Hit.point, c'est le point d'impact du rayon avec le collider
+                deathRayLine.startColor = deathRayCol;
+                deathRayLine.endColor = deathRayCol;
             }
             else{
-                line.enabled = false;
+                deathRayLine.enabled = false;
             }
         }
         else{
-            line.enabled = false;
+            deathRayLine.enabled = false;
         }
         
     }
