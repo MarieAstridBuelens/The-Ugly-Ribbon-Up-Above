@@ -862,6 +862,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4771605643212850240, guid: 70dd1b22b71e31148a0dc894bb9a48c5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d2fbc2b1738afc143ba190bb4491abd6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1143,7 +1148,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &832575518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1491,7 +1496,7 @@ PrefabInstance:
         type: 3}
       propertyPath: enemyMaterialSelected
       value: 
-      objectReference: {fileID: 2100000, guid: d2fbc2b1738afc143ba190bb4491abd6, type: 2}
+      objectReference: {fileID: 2100000, guid: 7b736ebc6904b204eb9ddca5a92b047c, type: 2}
     - target: {fileID: 4659817489760982432, guid: d5c69440605b73d489a0d8dad72f238a,
         type: 3}
       propertyPath: enemyMaterialNotSelected
@@ -2714,8 +2719,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: 4f894ef1ab61b614a89719be13a1db74,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: d2fbc2b1738afc143ba190bb4491abd6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

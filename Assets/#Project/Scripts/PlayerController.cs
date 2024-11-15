@@ -44,9 +44,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float telekinesisLength = 30f;
     [SerializeField] private float throwLength = 60f;
 
-    [SerializeField] private Material enemyMaterialNotSelected;
-    [SerializeField] private Material enemyMaterialSelected;
-
+    internal Renderer[] rendererBodyParts;
 
     void OnEnable()
     {
@@ -186,7 +184,12 @@ public class PlayerController : MonoBehaviour
             Collider coll = hit.collider.GetComponent<Collider>();
             if (coll.TryGetComponent(out Renderer renderer))
             {
-                renderer.material = enemyMaterialSelected;
+                renderer.material.SetFloat("_Glow", 0.661f);
+                rendererBodyParts = coll.GetComponentsInChildren<Renderer>();
+
+                foreach(Renderer bodyPart in rendererBodyParts)
+                    bodyPart.material.SetFloat("_Glow", 0.661f);
+                Debug.Log("shiny head");
             }
             else
             {
