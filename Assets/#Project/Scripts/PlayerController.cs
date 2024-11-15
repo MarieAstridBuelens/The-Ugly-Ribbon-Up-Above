@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private NavMeshAgent agent;
     Keyboard keyboard = Keyboard.current;
     Mouse mouse = Mouse.current;
-    [SerializeField] private float rayLength = 10f;
+    [SerializeField] private float rayLength = 60f;
     private Color col = Color.blue;
     internal Transform destructible;
     [SerializeField] internal Transform resetDestructible;
@@ -40,11 +40,17 @@ public class PlayerController : MonoBehaviour
 
     internal bool canDeathRay = true;
 
-    [SerializeField] private float deathRayLength = 30f;
-    [SerializeField] private float telekinesisLength = 30f;
+    [SerializeField] private GameObject prefab;
+    private float spawnLeftOversChrono = 10f;
+    private bool goLeftOversChrono = false;
+    [SerializeField] private Transform savedTransform;
+
+    [SerializeField] private float deathRayLength = 60f;
+    [SerializeField] private float telekinesisLength = 60f;
     [SerializeField] private float throwLength = 60f;
 
     internal Renderer[] rendererBodyParts;
+    [SerializeField] private Collider savedCollider;
 
     void OnEnable()
     {
@@ -97,6 +103,10 @@ public class PlayerController : MonoBehaviour
         if (movingToTarget)
         {
             ThrowingToTarget();
+        }
+
+        if(goLeftOversChrono){
+            SpawnLeftOvers();
         }
 
         // //arrêt de la course
@@ -169,21 +179,40 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(enemyHp.hp);
                 if (enemyHp.hp <= 0)
                 {
-                    Destroy(hit.transform.gameObject);
+                    savedTransform = enemyHp.transform;
+                    enemyHp.gameObject.SetActive(false);
+                    goLeftOversChrono = true;
+                    //Destroy(hit.transform.gameObject);
+                    Debug.Log("Leftovers appear");
                 }
 
             }
         }
 
     }
+
+    public void SpawnLeftOvers(){
+
+        Instantiate(prefab, savedTransform.position, savedTransform.rotation);
+        spawnLeftOversChrono--;
+        if(spawnLeftOversChrono <= 0){
+            goLeftOversChrono = false;
+            spawnLeftOversChrono = 10f;
+        }
+    }
+
     public void EnlightInteractible()
     {
         Debug.DrawRay(transform.position, transform.forward *  deathRayLength, col);
+        
+        Collider newCollider = null;
+
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength))
         {
             Collider coll = hit.collider.GetComponent<Collider>();
             if (coll.TryGetComponent(out Renderer renderer))
             {
+                newCollider = hit.collider;
                 renderer.material.SetFloat("_Glow", 0.661f);
                 rendererBodyParts = coll.GetComponentsInChildren<Renderer>();
 
@@ -191,10 +220,25 @@ public class PlayerController : MonoBehaviour
                     bodyPart.material.SetFloat("_Glow", 0.661f);
                 Debug.Log("shiny head");
             }
+
             else
             {
                 Debug.LogWarning($"There is no renderer on {coll.name}");
             }
+
+            if(savedCollider != null && (newCollider == null || newCollider != savedCollider)){
+                if (savedCollider.TryGetComponent(out Renderer rend))
+                {
+                rend.material.SetFloat("_Glow", 0.0f);
+                rendererBodyParts = savedCollider.GetComponentsInChildren<Renderer>();
+
+                foreach(Renderer bodyPart in rendererBodyParts)
+                    bodyPart.material.SetFloat("_Glow", 0.0f);
+                Debug.Log("not shiny head");
+                }
+            }
+
+            savedCollider = newCollider;
         }
     }
 
@@ -202,13 +246,21 @@ public class PlayerController : MonoBehaviour
     {
 
         Debug.Log("DeathRay activated!");
-        if (canDeathRay && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength))
+        Debug.Log($"can ray? {canDeathRay}");
+        Debug.DrawRay(transform.position, transform.forward * 10, Color.magenta, 10f);
+        if (canDeathRay && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit3, deathRayLength))
         {
+            Debug.Log($"Ray Touch: {hit3.collider.name}");
             Debug.DrawRay(transform.position, transform.forward * deathRayLength, col);
-            if (hit.collider.tag == "Enemy")
+            if (hit3.collider.tag == "Enemy")
             {
                 Debug.Log("ARGH! A DEATHRAY ATTACK!");
-                Destroy(hit.transform.gameObject);
+                savedTransform = hit3.collider.transform;
+                hit3.collider.gameObject.SetActive(false);
+                goLeftOversChrono = true;
+                //Destroy(hit.transform.gameObject);
+                Debug.Log("Leftovers appear");
+                //Destroy(hit3.transform.gameObject);
             }
         }
 
