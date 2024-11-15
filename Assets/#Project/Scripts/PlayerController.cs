@@ -44,7 +44,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float telekinesisLength = 30f;
     [SerializeField] private float throwLength = 60f;
 
-    void OnEnable(){
+    [SerializeField] private Material enemyMaterialNotSelected;
+    [SerializeField] private Material enemyMaterialSelected;
+
+
+    void OnEnable()
+    {
         inputActions.FindActionMap("PlayerMap").Enable();
         // run = inputActions["Run"];
         // run.performed += OnSpace;
@@ -57,7 +62,8 @@ public class PlayerController : MonoBehaviour
         telekinesis = inputActions["Telekinesis"];
     }
 
-    void OnDisable(){
+    void OnDisable()
+    {
         inputActions.FindActionMap("PlayerMap").Disable();
         // run.performed -= OnSpace;
         // run.canceled -= OnSpaceRelease;
@@ -83,12 +89,15 @@ public class PlayerController : MonoBehaviour
     {
         MoveControls();
         SideControls();
+        EnlightInteractible();
 
-        if(!canDeckOnShoulder){
+        if (!canDeckOnShoulder)
+        {
             CheckThrowLine();
         }
 
-        if(movingToTarget){
+        if (movingToTarget)
+        {
             ThrowingToTarget();
         }
 
@@ -98,7 +107,7 @@ public class PlayerController : MonoBehaviour
         //     agent.speed/=5 ;
         //     Debug.Log(agent.speed);
         // }
-        
+
         //raycast destination selon souris
         // Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//donne un rayon qui part de la caméra, traverse l'écran et continue dans le monde
         // RaycastHit hit;
@@ -108,20 +117,21 @@ public class PlayerController : MonoBehaviour
         //} //permet de faire rejoindre la souris, sans forcément cliquer
     }
 
-    
-    void MoveControls(){
-        
+
+    void MoveControls()
+    {
+
         Vector3 moveAmount = move.ReadValue<Vector3>();
         //Debug.Log(moveAmount);
 
-        if(moveAmount == Vector3.zero) return; // SINONla direction indiquée va quand même donner un vectuer qui initie un mouvement !
+        if (moveAmount == Vector3.zero) return; // SINONla direction indiquée va quand même donner un vectuer qui initie un mouvement !
 
         //rotation du Player vers sa direction
         //Atan2 = fonction qui retourne l'angle en radiants entre axe x et le vecteur allant de (0,0) à (moveAmount.x, moveAmount.y)
         //Mathf.Rad2Deg : traduit radiants en degrés
         //Quaternion.Euler nous permet de donner trois nombre, la rotation autour de x, y et z.
         float targetAngle = Mathf.Atan2(moveAmount.x, moveAmount.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-        
+
         //assouplir la rotation du Player
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
@@ -131,7 +141,8 @@ public class PlayerController : MonoBehaviour
         transform.position += new Vector3(moveDirection.x, moveDirection.y, moveDirection.z).normalized * Time.deltaTime * speed;
     }
 
-    void SideControls(){
+    void SideControls()
+    {
         Vector3 sideAmount = sideSteps.ReadValue<Vector3>();
         transform.position += new Vector3(sideAmount.x, sideAmount.y, sideAmount.z).normalized * Time.deltaTime * speed;
     }
@@ -146,100 +157,132 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public void BasicStrike(InputAction.CallbackContext context){
+    public void BasicStrike(InputAction.CallbackContext context)
+    {
 
         Debug.Log("clicked!");
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength)){
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength))
+        {
             Debug.DrawRay(transform.position, transform.forward * rayLength, col);
             HealthManager enemyHp = hit.collider.GetComponent<HealthManager>();
-            if (enemyHp != null){
+            if (enemyHp != null)
+            {
                 enemyHp.hp -= 1;
                 Debug.Log(enemyHp.hp);
-                if(enemyHp.hp <= 0){
+                if (enemyHp.hp <= 0)
+                {
                     Destroy(hit.transform.gameObject);
                 }
-                
+
             }
         }
-        
+
+    }
+    public void EnlightInteractible()
+    {
+        Debug.DrawRay(transform.position, transform.forward *  deathRayLength, col);
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength))
+        {
+            Collider coll = hit.collider.GetComponent<Collider>();
+            if (coll.TryGetComponent(out Renderer renderer))
+            {
+                renderer.material = enemyMaterialSelected;
+            }
+            else
+            {
+                Debug.LogWarning($"There is no renderer on {coll.name}");
+            }
+        }
     }
 
-    public void DeathRay(InputAction.CallbackContext context){
+    public void DeathRay(InputAction.CallbackContext context)
+    {
 
         Debug.Log("DeathRay activated!");
-        if( canDeathRay && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength)){
+        if (canDeathRay && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength))
+        {
             Debug.DrawRay(transform.position, transform.forward * deathRayLength, col);
-            if (hit.collider.tag == "Enemy"){
+            if (hit.collider.tag == "Enemy")
+            {
                 Debug.Log("ARGH! A DEATHRAY ATTACK!");
                 Destroy(hit.transform.gameObject);
             }
         }
-            
+
     }
 
-    public void TelekinesisActived(InputAction.CallbackContext context){
+    public void TelekinesisActived(InputAction.CallbackContext context)
+    {
         Debug.Log("You're now in the Telekinesis mode!");
-        if(canDeckOnShoulder && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, telekinesisLength)){
+        if (canDeckOnShoulder && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, telekinesisLength))
+        {
             Debug.DrawRay(transform.position, transform.forward * telekinesisLength, col);
-            
-            if(hit.transform.GetComponent<NavMeshAgent>()){
+
+            if (hit.transform.GetComponent<NavMeshAgent>())
+            {
                 NavMeshAgent agent = hit.transform.GetComponent<NavMeshAgent>();
                 agent.enabled = false;
             }
 
             destructible = hit.transform.GetComponent<Transform>();
             destructible.SetParent(shoulder);
-            destructible.transform.localPosition = new Vector3(0,0,0);
+            destructible.transform.localPosition = new Vector3(0, 0, 0);
             canDeckOnShoulder = false;
             canDeathRay = false;
 
-            
+
 
             // Vector3 pos =  destructible.position;
             // pos.y = transform.position.y + 4;
             // pos.x = transform.position.x + 2;
             // pos.z = transform.position.z;
             // destructible.position = pos;
-            
+
             //penser à une rotation de 90°
 
         }
 
     }
 
-    public void CheckThrowLine(){
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength)){
-                Debug.DrawRay(transform.position, transform.forward * throwLength, col);
-                throwLine.enabled = true;
-                throwLine.startColor = throwCol;
-                throwLine.endColor = throwCol;
-                throwLine.SetPosition(0, shoulder.position);
-                throwLine.SetPosition(1, hit.point);
-            }
-        else{
+    public void CheckThrowLine()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength))
+        {
+            Debug.DrawRay(transform.position, transform.forward * throwLength, col);
+            throwLine.enabled = true;
+            throwLine.startColor = throwCol;
+            throwLine.endColor = throwCol;
+            throwLine.SetPosition(0, shoulder.position);
+            throwLine.SetPosition(1, hit.point);
+        }
+        else
+        {
             throwLine.enabled = false;
         }
     }
 
-    public void TelekinesisThrow(InputAction.CallbackContext context){
+    public void TelekinesisThrow(InputAction.CallbackContext context)
+    {
         Debug.Log("Take that!");
         destructible.SetParent(null);
-        movingToTarget = true; 
-        
+        movingToTarget = true;
+
     }
 
-    public void ThrowingToTarget(){
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength)){
+    public void ThrowingToTarget()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength))
+        {
             Vector3 placeToHit = hit.point + new Vector3(0, 2, 0);
-            destructible.transform.position = Vector3.MoveTowards(destructible.transform.position, placeToHit, throwSpeed); 
+            destructible.transform.position = Vector3.MoveTowards(destructible.transform.position, placeToHit, throwSpeed);
         }
         throwLine.enabled = false;
-        
+
     }
 
-    
+
 
 }
-    
+
 
 
