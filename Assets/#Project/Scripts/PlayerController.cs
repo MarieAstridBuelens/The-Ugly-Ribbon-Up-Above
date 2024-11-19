@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Start");
         //assign a callback for BasicStrike and DeathRay
         basicStrikeControl.performed += BasicStrike;
         deathRayControl.performed += DeathRay;
