@@ -214,12 +214,18 @@ public class PlayerController : MonoBehaviour
             if (coll.TryGetComponent(out Renderer renderer))
             {
                 newCollider = hit.collider;
-                renderer.material.SetFloat("_Glow", 0.661f);
-                rendererBodyParts = coll.GetComponentsInChildren<Renderer>();
+                if(newCollider.tag == "Enemy"){
+                    renderer.material.SetFloat("_Glow", 0.661f);
+                    rendererBodyParts = coll.GetComponentsInChildren<Renderer>();
 
-                foreach(Renderer bodyPart in rendererBodyParts)
-                    bodyPart.material.SetFloat("_Glow", 0.661f);
-                Debug.Log("shiny head");
+                    foreach(Renderer bodyPart in rendererBodyParts)
+                        bodyPart.material.SetFloat("_Glow", 0.661f);
+                    Debug.Log("shiny head");
+                }
+                else if(newCollider.tag == "Interactible"){
+                    renderer.material.SetFloat("_Glow", 20f);
+                }
+                
             }
 
             else
