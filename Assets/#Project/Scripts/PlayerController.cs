@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
 
     internal Renderer[] rendererBodyParts;
     [SerializeField] private Collider savedCollider;
+    //[SerializeField] private Light sceneLight;
+
+
 
     void OnEnable()
     {
@@ -204,6 +207,8 @@ public class PlayerController : MonoBehaviour
 
     public void EnlightInteractible()
     {
+        float defaultIntensity = 0.42f;
+        
         Debug.DrawRay(transform.position, transform.forward *  deathRayLength, col);
         
         Collider newCollider = null;
@@ -223,7 +228,12 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("shiny head");
                 }
                 else if(newCollider.tag == "Interactible"){
+                    Debug.Log(RenderSettings.ambientIntensity);
                     renderer.material.SetFloat("_Glow", 20f);
+                    //quand bow hightlighted, change la lumière de la scène de façon enchanteuse
+                    RenderSettings.ambientIntensity = Mathf.PingPong(Time.time * 2.35f, 5);
+                    Debug.Log(RenderSettings.ambientIntensity);
+                    //rdrSettings.ambientIntensity = Mathf.PingPong(Time.time, 8); // pingpong change graduellement la lumière jusqu'à l'intensité demandé, 8 étant le maximum
                 }
                 
             }
@@ -238,7 +248,8 @@ public class PlayerController : MonoBehaviour
                 {
                 rend.material.SetFloat("_Glow", 0.0f);
                 rendererBodyParts = savedCollider.GetComponentsInChildren<Renderer>();
-
+                RenderSettings.ambientIntensity = defaultIntensity;
+                Debug.Log("REVERSE" + RenderSettings.ambientIntensity);
                 foreach(Renderer bodyPart in rendererBodyParts)
                     bodyPart.material.SetFloat("_Glow", 0.0f);
                 Debug.Log("not shiny head");
