@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     //booleans for sound
     internal bool nEvilMoving = false;
-
+    internal AudioManager audiomanager;
 
 
     void OnEnable()
@@ -99,7 +99,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MoveControls();
-        SideControls();
         EnlightInteractible();
 
         if (!canDeckOnShoulder)
@@ -138,8 +137,9 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveAmount = move.ReadValue<Vector3>();
         //Debug.Log(moveAmount);
+        Vector3 sideAmount = sideSteps.ReadValue<Vector3>();
 
-        if (moveAmount == Vector3.zero) {
+        if (moveAmount == Vector3.zero && sideAmount == Vector3.zero) {
             nEvilMoving = false;
             return;
         } // SINONla direction indiquée va quand même donner un vectuer qui initie un mouvement !
@@ -158,11 +158,8 @@ public class PlayerController : MonoBehaviour
         //donne la direction vers laquelle on veut aller en prenant en compte l'angle de la caméra
         Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         transform.position += new Vector3(moveDirection.x, moveDirection.y, moveDirection.z).normalized * Time.deltaTime * speed;
-    }
 
-    void SideControls()
-    {
-        Vector3 sideAmount = sideSteps.ReadValue<Vector3>();
+        //direction des sidesteps
         transform.position += new Vector3(sideAmount.x, sideAmount.y, sideAmount.z).normalized * Time.deltaTime * speed;
     }
 
@@ -180,10 +177,13 @@ public class PlayerController : MonoBehaviour
     {
 
         Debug.Log("clicked!");
+        audiomanager.BasicStrikeSound();
+        
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength))
         {
             Debug.DrawRay(transform.position, transform.forward * rayLength, col);
             HealthManager enemyHp = hit.collider.GetComponent<HealthManager>();
+            
             if (enemyHp != null)
             {
                 enemyHp.hp -= 1;
@@ -198,7 +198,10 @@ public class PlayerController : MonoBehaviour
                 }
 
             }
+            
         }
+
+        
 
     }
 
