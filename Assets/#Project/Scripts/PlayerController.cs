@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider savedCollider;
     //[SerializeField] private Light sceneLight;
 
+    //booleans for sound
+    internal bool nEvilMoving = false;
+
 
 
     void OnEnable()
@@ -136,7 +139,11 @@ public class PlayerController : MonoBehaviour
         Vector3 moveAmount = move.ReadValue<Vector3>();
         //Debug.Log(moveAmount);
 
-        if (moveAmount == Vector3.zero) return; // SINONla direction indiquée va quand même donner un vectuer qui initie un mouvement !
+        if (moveAmount == Vector3.zero) {
+            nEvilMoving = false;
+            return;
+        } // SINONla direction indiquée va quand même donner un vectuer qui initie un mouvement !
+        else  nEvilMoving = true;
 
         //rotation du Player vers sa direction
         //Atan2 = fonction qui retourne l'angle en radiants entre axe x et le vecteur allant de (0,0) à (moveAmount.x, moveAmount.y)
@@ -229,7 +236,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if(newCollider.tag == "Interactible"){
                     Debug.Log(RenderSettings.ambientIntensity);
-                    renderer.material.SetFloat("_Glow", 20f);
+                    renderer.material.SetFloat("_Glow", 0.661f);
                     //quand bow hightlighted, change la lumière de la scène de façon enchanteuse
                     RenderSettings.ambientIntensity = Mathf.PingPong(Time.time * 2.35f, 5);
                     Debug.Log(RenderSettings.ambientIntensity);
