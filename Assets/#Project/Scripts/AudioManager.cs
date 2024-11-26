@@ -5,27 +5,29 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     
-    [SerializeField] AudioSource nEvilSound;
-    [SerializeField] AudioSource bowSound;
-    [SerializeField] AudioSource daveSound;
+    [SerializeField] internal AudioSource nEvilSound;
+    [SerializeField] internal AudioSource bowSound;
+    [SerializeField] internal AudioSource daveSound;
     internal PlayerController playerController;
     internal AudioSource playerAudioSource;
-    private int startingCounter = 620;
-    AudioSource[]allMyAudioSources;
-    AudioSource movingNEvilSound;
-    AudioSource basicStrikeSound;
+    internal int startingCounter = 620;
+    internal AudioSource movingNEvilSound;
+    internal AudioSource basicStrikeSound;
+    internal AudioSource[] allAudioSources;
     
 
     // Start is called before the first frame update
     void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
-        playerAudioSource = playerController.GetComponent<AudioSource>();
+
+        allAudioSources = playerController.GetComponentsInChildren<AudioSource>();
+        playerAudioSource = allAudioSources[0];
         playerAudioSource.clip = playerController.GetComponent<NEvilSound>().startLevel;
 
-        allMyAudioSources = GetComponents<AudioSource>();
-        movingNEvilSound = allMyAudioSources[0];
-        basicStrikeSound = allMyAudioSources[1];
+        basicStrikeSound = allAudioSources[1];
+        basicStrikeSound.clip = playerController.GetComponent<NEvilSound>().basicStrike;
+        
 
     }
 
@@ -38,8 +40,15 @@ public class AudioManager : MonoBehaviour
             
             playerAudioSource.clip = playerController.GetComponent<NEvilSound>().footsteps;
             playerAudioSource.loop = true;
+            playerAudioSource.pitch = Random.Range(0.9f, 1.1f);
             playerAudioSource.Play();
             Debug.Log(playerAudioSource.clip);
+        }
+
+        if(playerController.askAudioManagerBasicStrikeSound){
+            Debug.Log("hit sound playing");
+            basicStrikeSound.PlayOneShot(basicStrikeSound.clip, 1f);
+            playerController.askAudioManagerBasicStrikeSound = false;
         }
 
     //   if(playerController.nEvilBasicShooting){
@@ -50,8 +59,8 @@ public class AudioManager : MonoBehaviour
     //     }
     }
 
-    public void BasicStrikeSound(){
-        Debug.Log("hit sound playing");
-        basicStrikeSound.PlayOneShot(basicStrikeSound.clip, 1f);
-    }
+    // public void BasicStrikeSound(){
+    //     Debug.Log("hit sound playing");
+    //     basicStrikeSound.PlayOneShot(basicStrikeSound.clip, 1f);
+    // }
 }

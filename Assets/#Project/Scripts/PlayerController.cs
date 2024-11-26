@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     //booleans for sound
     internal bool nEvilMoving = false;
     internal AudioManager audiomanager;
+    internal bool askAudioManagerBasicStrikeSound = false;
 
 
     void OnEnable()
@@ -176,12 +177,13 @@ public class PlayerController : MonoBehaviour
     public void BasicStrike(InputAction.CallbackContext context)
     {
 
-        Debug.Log("clicked!");
-        audiomanager.BasicStrikeSound();
+        //Debug.Log("clicked!");
+        askAudioManagerBasicStrikeSound = true;
         
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength))
         {
-            Debug.DrawRay(transform.position, transform.forward * rayLength, col);
+            //Debug.Log("I shot");
+            //Debug.DrawRay(transform.position, transform.forward * rayLength, col);
             HealthManager enemyHp = hit.collider.GetComponent<HealthManager>();
             
             if (enemyHp != null)
@@ -194,7 +196,7 @@ public class PlayerController : MonoBehaviour
                     enemyHp.gameObject.SetActive(false);
                     goLeftOversChrono = true;
                     //Destroy(hit.transform.gameObject);
-                    Debug.Log("Leftovers appear");
+                    //Debug.Log("Leftovers appear");
                 }
 
             }
@@ -206,6 +208,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void SpawnLeftOvers(){
+        Debug.Log("Leftovers spawned");
 
         Instantiate(prefab, savedTransform.position, savedTransform.rotation);
         spawnLeftOversChrono--;

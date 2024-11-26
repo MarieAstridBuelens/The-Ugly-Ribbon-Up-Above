@@ -3,7 +3,15 @@ guid: bad27276a9983724cbe7f48a3a6b531c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - inputActions: {instanceID: 0}
+  - cam: {instanceID: 0}
+  - shoulder: {instanceID: 0}
+  - resetDestructible: {instanceID: 0}
+  - throwLine: {instanceID: 0}
+  - prefab: {instanceID: 0}
+  - savedTransform: {instanceID: 0}
+  - savedCollider: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
