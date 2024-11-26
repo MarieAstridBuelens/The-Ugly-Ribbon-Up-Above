@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
+        //Debug.Log("Start");
         //assign a callback for BasicStrike and DeathRay
         basicStrikeControl.performed += BasicStrike;
         deathRayControl.performed += DeathRay;
@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("clicked!");
         askAudioManagerBasicStrikeSound = true;
         
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, rayLength))
+        if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out RaycastHit hit, rayLength))
         {
             //Debug.Log("I shot");
             //Debug.DrawRay(transform.position, transform.forward * rayLength, col);
@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("shiny head");
                 }
                 else if(newCollider.tag == "Interactible"){
-                    Debug.Log(RenderSettings.ambientIntensity);
+                    //Debug.Log(RenderSettings.ambientIntensity);
                     renderer.material.SetFloat("_Glow", 0.661f);
                     //quand bow hightlighted, change la lumière de la scène de façon enchanteuse
                     RenderSettings.ambientIntensity = Mathf.PingPong(Time.time * 2.35f, 5);
@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviour
                 rend.material.SetFloat("_Glow", 0.0f);
                 rendererBodyParts = savedCollider.GetComponentsInChildren<Renderer>();
                 RenderSettings.ambientIntensity = defaultIntensity;
-                Debug.Log("REVERSE" + RenderSettings.ambientIntensity);
+                //Debug.Log("REVERSE" + RenderSettings.ambientIntensity);
                 foreach(Renderer bodyPart in rendererBodyParts)
                     bodyPart.material.SetFloat("_Glow", 0.0f);
                 Debug.Log("not shiny head");

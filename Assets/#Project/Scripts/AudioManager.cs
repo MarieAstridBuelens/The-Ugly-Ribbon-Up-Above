@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
             playerAudioSource.loop = true;
             playerAudioSource.pitch = Random.Range(0.9f, 1.1f);
             playerAudioSource.Play();
-            Debug.Log(playerAudioSource.clip);
+            //Debug.Log(playerAudioSource.clip);
         }
 
         if(playerController.askAudioManagerBasicStrikeSound){
