@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -14,11 +15,14 @@ public class AudioManager : MonoBehaviour
     internal AudioSource movingNEvilSound;
     internal AudioSource basicStrikeSound;
     internal AudioSource[] allAudioSources;
+    internal NavMeshObstacle navMeshObstacle;
+    internal AudioSource bowAudioSource;
     
 
     // Start is called before the first frame update
     void Start()
     {
+        //nEvil sounds
         playerController = FindObjectOfType<PlayerController>();
 
         allAudioSources = playerController.GetComponentsInChildren<AudioSource>();
@@ -27,7 +31,11 @@ public class AudioManager : MonoBehaviour
 
         basicStrikeSound = allAudioSources[1];
         basicStrikeSound.clip = playerController.GetComponent<NEvilSound>().basicStrike;
-        
+
+        //bow sounds
+        navMeshObstacle = FindObjectOfType<NavMeshObstacle>();
+        bowAudioSource = navMeshObstacle.GetComponent<AudioSource>();
+        bowAudioSource.clip = navMeshObstacle.GetComponent<BowSound>().bowHighlighted;
 
     }
 
@@ -49,6 +57,13 @@ public class AudioManager : MonoBehaviour
             Debug.Log("hit sound playing");
             basicStrikeSound.PlayOneShot(basicStrikeSound.clip, 1f);
             playerController.askAudioManagerBasicStrikeSound = false;
+        }
+
+        if(playerController.askAudioManagerBowHighLight && playerController.bowHighlighCounter <= 0){
+            Debug.Log("bow highlighted playing");
+            bowAudioSource.PlayOneShot(bowAudioSource.clip, 1f);
+            playerController.askAudioManagerBowHighLight = false;
+            playerController.bowHighlighCounter = 700f;
         }
 
     //   if(playerController.nEvilBasicShooting){

@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
     internal bool nEvilMoving = false;
     internal AudioManager audiomanager;
     internal bool askAudioManagerBasicStrikeSound = false;
+    internal bool askAudioManagerBowHighLight = false;
+    internal float bowHighlighCounter = 0f;
 
 
     void OnEnable()
@@ -179,7 +181,7 @@ public class PlayerController : MonoBehaviour
 
         //Debug.Log("clicked!");
         askAudioManagerBasicStrikeSound = true;
-        
+        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 50, Color.magenta, 1f);
         if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out RaycastHit hit, rayLength))
         {
             //Debug.Log("I shot");
@@ -242,6 +244,8 @@ public class PlayerController : MonoBehaviour
                 }
                 else if(newCollider.tag == "Interactible"){
                     //Debug.Log(RenderSettings.ambientIntensity);
+                    askAudioManagerBowHighLight = true;
+                    bowHighlighCounter --;
                     renderer.material.SetFloat("_Glow", 0.661f);
                     //quand bow hightlighted, change la lumière de la scène de façon enchanteuse
                     RenderSettings.ambientIntensity = Mathf.PingPong(Time.time * 2.35f, 5);
@@ -260,6 +264,7 @@ public class PlayerController : MonoBehaviour
                 if (savedCollider.TryGetComponent(out Renderer rend))
                 {
                 rend.material.SetFloat("_Glow", 0.0f);
+                askAudioManagerBowHighLight = false;
                 rendererBodyParts = savedCollider.GetComponentsInChildren<Renderer>();
                 RenderSettings.ambientIntensity = defaultIntensity;
                 //Debug.Log("REVERSE" + RenderSettings.ambientIntensity);

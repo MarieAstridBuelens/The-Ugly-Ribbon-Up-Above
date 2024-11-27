@@ -1700,6 +1700,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3585944016046816687, guid: bddad67150b66834ab9da3d20c6675c4,
+        type: 3}
+      propertyPath: Priority
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: -3585944016046816687, guid: bddad67150b66834ab9da3d20c6675c4,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 476915908395244866, guid: bddad67150b66834ab9da3d20c6675c4,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 7.39
+      objectReference: {fileID: 0}
     - target: {fileID: 5071892211927308471, guid: bddad67150b66834ab9da3d20c6675c4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1708,7 +1723,7 @@ PrefabInstance:
     - target: {fileID: 5071892211927308471, guid: bddad67150b66834ab9da3d20c6675c4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.49
+      value: 3.01
       objectReference: {fileID: 0}
     - target: {fileID: 5071892211927308471, guid: bddad67150b66834ab9da3d20c6675c4,
         type: 3}
