@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canvasRenderer = FindObjectOfType<CanvasRenderer>();
+        canvasRenderer = FindObjectOfType<CanvasRenderer>(includeInactive: true);
         tmp = canvasRenderer.GetComponent<TextMeshProUGUI>();
     }
 
@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         if(canvasRenderer.gameObject.activeInHierarchy){
-            tmp.fontMaterial.SetFloat("_FaceDilate", Mathf.PingPong(Time.time, 0.3f));
+            tmp.fontMaterial.SetFloat("_FaceDilate", Mathf.PingPong(Time.time / 3f, 0.3f));
             //tutoMaterial.SetFloat("_FaceDilate", Mathf.PingPong(Time.time * 2.35f, 0.3f));
         }
     }
