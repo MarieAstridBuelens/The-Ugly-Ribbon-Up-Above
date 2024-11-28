@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
     internal bool askAudioManagerBowHighLight = false;
     internal float bowHighlighCounter = 0f;
     internal bool bowIsDestroyed = false;
+    internal float basicStrikePlayerRotationCounter = 30f;
+    internal bool basicStrikeRotation = false;
 
 
     void OnEnable()
@@ -118,6 +120,14 @@ public class PlayerController : MonoBehaviour
         if(goLeftOversChrono){
             SpawnLeftOvers();
         }
+        // if(basicStrikeRotation){
+        //     basicStrikePlayerRotationCounter--;
+        //     if(basicStrikePlayerRotationCounter<=0){
+        //         basicStrikeRotation = false;
+        //         basicStrikePlayerRotationCounter = 30f;
+        //         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        //     }
+        // }
 
         // //arrêt de la course
         // Keyboard keyboard = Keyboard.current;
@@ -182,6 +192,14 @@ public class PlayerController : MonoBehaviour
 
         //Debug.Log("clicked!");
         askAudioManagerBasicStrikeSound = true;
+        basicStrikeRotation = true;
+        // foreach (meshrenderer in gameObject.GetComponentInChildren<MeshRenderer>()){
+        //     if(meshrenderer.CompareTag == "Cloak"){
+
+        //     }
+        //     break;
+        // }
+        // transform.rotation = Quaternion.Euler(0f, 45f, 0);
         Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 50, Color.magenta, 1f);
         if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out RaycastHit hit, rayLength))
         {
@@ -208,9 +226,6 @@ public class PlayerController : MonoBehaviour
             }
             
         }
-
-        
-
     }
 
     public void SpawnLeftOvers(){
