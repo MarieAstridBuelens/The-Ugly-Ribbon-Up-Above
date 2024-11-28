@@ -61,9 +61,17 @@ public class AudioManager : MonoBehaviour
 
         if(playerController.askAudioManagerBowHighLight && playerController.bowHighlighCounter <= 0){
             Debug.Log("bow highlighted playing");
+            bowAudioSource.clip = navMeshObstacle.GetComponent<BowSound>().bowHighlighted;
             bowAudioSource.PlayOneShot(bowAudioSource.clip, 1f);
             playerController.askAudioManagerBowHighLight = false;
-            playerController.bowHighlighCounter = 700f;
+            playerController.bowHighlighCounter = 900f;
+        }
+
+        if(playerController.bowIsDestroyed){
+            Debug.Log("destroyed bow playing");
+            bowAudioSource.clip = navMeshObstacle.GetComponent<BowSound>().destroyedBow;
+            AudioSource.PlayClipAtPoint(bowAudioSource.clip, transform.position);
+            playerController.bowIsDestroyed = false;
         }
 
     //   if(playerController.nEvilBasicShooting){

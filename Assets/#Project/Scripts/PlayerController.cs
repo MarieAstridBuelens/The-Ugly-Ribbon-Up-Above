@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     internal bool askAudioManagerBasicStrikeSound = false;
     internal bool askAudioManagerBowHighLight = false;
     internal float bowHighlighCounter = 0f;
+    internal bool bowIsDestroyed = false;
 
 
     void OnEnable()
@@ -194,6 +195,9 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(enemyHp.hp);
                 if (enemyHp.hp <= 0)
                 {
+                    if(enemyHp.tag == "Interactible"){
+                        bowIsDestroyed = true;
+                    }
                     savedTransform = enemyHp.transform;
                     enemyHp.gameObject.SetActive(false);
                     goLeftOversChrono = true;
