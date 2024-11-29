@@ -26,7 +26,7 @@ public class DialogueTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other){
         if(other.tag == "Player"){
-            Debug.Log("triggered");
+            //Debug.Log("triggered");
             counterOn = true;
             tmp_dialogueBox.gameObject.SetActive(true);
             tmp_dialogueBox.text = txt;

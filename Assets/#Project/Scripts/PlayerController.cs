@@ -33,7 +33,11 @@ public class PlayerController : MonoBehaviour
     private Color col = Color.blue;
     internal Transform destructible;
     [SerializeField] internal Transform resetDestructible;
-    internal bool canDeckOnShoulder = true;
+    private bool _canDeckOnShoulder = true;
+    public bool canDeckOnShoulder{
+        get{return _canDeckOnShoulder;}
+        set{_canDeckOnShoulder = value;}
+    }
     [SerializeField] private LineRenderer throwLine;
     [SerializeField] private Color throwCol = Color.blue;
     internal bool movingToTarget = false;
@@ -60,7 +64,7 @@ public class PlayerController : MonoBehaviour
     internal bool askAudioManagerBowHighLight = false;
     internal float bowHighlighCounter = 0f;
     internal bool bowIsDestroyed = false;
-    internal float basicStrikePlayerRotationCounter = 30f;
+    internal float basicStrikePlayerRotationCounter = 20f;
     internal bool basicStrikeRotation = false;
 
 
@@ -120,14 +124,14 @@ public class PlayerController : MonoBehaviour
         if(goLeftOversChrono){
             SpawnLeftOvers();
         }
-        // if(basicStrikeRotation){
-        //     basicStrikePlayerRotationCounter--;
-        //     if(basicStrikePlayerRotationCounter<=0){
-        //         basicStrikeRotation = false;
-        //         basicStrikePlayerRotationCounter = 30f;
-        //         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        //     }
-        // }
+        if(basicStrikeRotation){
+            basicStrikePlayerRotationCounter --;
+            if(basicStrikePlayerRotationCounter<=0){
+                basicStrikeRotation = false;
+                basicStrikePlayerRotationCounter = 20f;
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
+        }
 
         // //arrêt de la course
         // Keyboard keyboard = Keyboard.current;
@@ -192,14 +196,6 @@ public class PlayerController : MonoBehaviour
 
         //Debug.Log("clicked!");
         askAudioManagerBasicStrikeSound = true;
-        basicStrikeRotation = true;
-        // foreach (meshrenderer in gameObject.GetComponentInChildren<MeshRenderer>()){
-        //     if(meshrenderer.CompareTag == "Cloak"){
-
-        //     }
-        //     break;
-        // }
-        // transform.rotation = Quaternion.Euler(0f, 45f, 0);
         Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 50, Color.magenta, 1f);
         if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out RaycastHit hit, rayLength))
         {
@@ -211,6 +207,8 @@ public class PlayerController : MonoBehaviour
             {
                 enemyHp.hp -= 1;
                 Debug.Log(enemyHp.hp);
+                basicStrikeRotation = true;
+                transform.rotation = Quaternion.Euler(0f, 45f, 0);
                 if (enemyHp.hp <= 0)
                 {
                     if(enemyHp.tag == "Interactible"){
@@ -356,7 +354,7 @@ public class PlayerController : MonoBehaviour
 
     public void CheckThrowLine()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength))
+        if (canDeckOnShoulder && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, throwLength))
         {
             Debug.DrawRay(transform.position, transform.forward * throwLength, col);
             throwLine.enabled = true;
