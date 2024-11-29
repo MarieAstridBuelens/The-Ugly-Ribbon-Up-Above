@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     Keyboard keyboard = Keyboard.current;
     Mouse mouse = Mouse.current;
     [SerializeField] private float rayLength = 60f;
+    internal Collider newCollider = null;
     private Color col = Color.blue;
     internal Transform destructible;
     [SerializeField] internal Transform resetDestructible;
@@ -243,7 +244,7 @@ public class PlayerController : MonoBehaviour
         
         Debug.DrawRay(transform.position, transform.forward *  deathRayLength, col);
         
-        Collider newCollider = null;
+        newCollider = null;
 
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength))
         {

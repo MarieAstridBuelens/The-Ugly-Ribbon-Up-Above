@@ -16,13 +16,16 @@ public class HealthManager : MonoBehaviour
         }
         
     }
+    internal int maxHP = 10;
 
     void Start(){
         if(gameObject.tag == "Enemy"){
             _hp = 10;
+            maxHP = 10;
         }
         else if(gameObject.tag == "Interactible"){
             _hp = 5;
+            maxHP = 5;
         }
     }
 }
