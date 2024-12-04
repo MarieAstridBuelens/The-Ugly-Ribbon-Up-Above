@@ -10,7 +10,7 @@ public class SceneChanger : MonoBehaviour
 
     void OnTriggerEnter(Collider other){
         if(other.tag == "Player"){
-            SceneManager.LoadScene(1); 
+            SceneManager.LoadScene("SandBox"); 
         } 
     }
 

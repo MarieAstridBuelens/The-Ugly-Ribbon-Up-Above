@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float throwLength = 60f;
 
     internal Renderer[] rendererBodyParts;
-    [SerializeField] private Collider savedCollider;
+    [SerializeField] internal Collider savedCollider;
     //[SerializeField] private Light sceneLight;
 
     //booleans for sound
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     internal bool askAudioManagerBowHighLight = false;
     internal float bowHighlighCounter = 0f;
     internal bool bowIsDestroyed = false;
-    internal float basicStrikePlayerRotationCounter = 20f;
+    internal float basicStrikePlayerRotationCounter = 50f;
     internal bool basicStrikeRotation = false;
 
 
@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
             basicStrikePlayerRotationCounter --;
             if(basicStrikePlayerRotationCounter<=0){
                 basicStrikeRotation = false;
-                basicStrikePlayerRotationCounter = 20f;
+                basicStrikePlayerRotationCounter = 50f;
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
@@ -203,7 +203,6 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("I shot");
             //Debug.DrawRay(transform.position, transform.forward * rayLength, col);
             HealthManager enemyHp = hit.collider.GetComponent<HealthManager>();
-            
             if (enemyHp != null)
             {
                 enemyHp.hp -= 1;
