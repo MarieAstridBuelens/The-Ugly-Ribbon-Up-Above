@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     internal bool askAudioManagerBowHighLight = false;
     internal float bowHighlighCounter = 0f;
     internal bool bowIsDestroyed = false;
-    internal float basicStrikePlayerRotationCounter = 50f;
+    internal float basicStrikePlayerRotationCounter = 60f;
     internal bool basicStrikeRotation = false;
 
 
@@ -126,11 +126,11 @@ public class PlayerController : MonoBehaviour
             SpawnLeftOvers();
         }
         if(basicStrikeRotation){
-            basicStrikePlayerRotationCounter --;
+            basicStrikePlayerRotationCounter--;
             if(basicStrikePlayerRotationCounter<=0){
+                transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                basicStrikePlayerRotationCounter = 60f;
                 basicStrikeRotation = false;
-                basicStrikePlayerRotationCounter = 50f;
-                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
 
@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
                 enemyHp.hp -= 1;
                 Debug.Log(enemyHp.hp);
                 basicStrikeRotation = true;
-                transform.rotation = Quaternion.Euler(0f, 45f, 0);
+                transform.rotation = Quaternion.Euler(0f, -45f, 0);
                 if (enemyHp.hp <= 0)
                 {
                     if(enemyHp.tag == "Interactible"){
@@ -264,9 +264,10 @@ public class PlayerController : MonoBehaviour
                     askAudioManagerBowHighLight = true;
                     bowHighlighCounter --;
                     renderer.material.SetFloat("_Glow", 0.661f);
+                    Debug.Log(renderer.material);
                     //quand bow hightlighted, change la lumière de la scène de façon enchanteuse
-                    RenderSettings.ambientIntensity = Mathf.PingPong(Time.time * 2.35f, 5);
-                    Debug.Log(RenderSettings.ambientIntensity);
+                    RenderSettings.ambientIntensity = Mathf.PingPong(Time.time * 2.35f, 8);
+                    //Debug.Log(RenderSettings.ambientIntensity);
                     //rdrSettings.ambientIntensity = Mathf.PingPong(Time.time, 8); // pingpong change graduellement la lumière jusqu'à l'intensité demandé, 8 étant le maximum
                 }
                 
