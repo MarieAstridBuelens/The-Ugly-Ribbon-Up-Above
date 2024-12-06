@@ -65,8 +65,9 @@ public class PlayerController : MonoBehaviour
     internal bool askAudioManagerBowHighLight = false;
     internal float bowHighlighCounter = 0f;
     internal bool bowIsDestroyed = false;
-    internal float basicStrikePlayerRotationCounter = 60f;
+    internal float basicStrikePlayerRotationCounter = 40f;
     internal bool basicStrikeRotation = false;
+    internal string currentLevel = "Level0";
 
 
     void OnEnable()
@@ -125,14 +126,14 @@ public class PlayerController : MonoBehaviour
         if(goLeftOversChrono){
             SpawnLeftOvers();
         }
-        if(basicStrikeRotation){
-            basicStrikePlayerRotationCounter--;
-            if(basicStrikePlayerRotationCounter<=0){
-                transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-                basicStrikePlayerRotationCounter = 60f;
-                basicStrikeRotation = false;
-            }
-        }
+        // if(basicStrikeRotation){
+        //     basicStrikePlayerRotationCounter--;
+        //     if(basicStrikePlayerRotationCounter<=0){
+        //         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        //         basicStrikePlayerRotationCounter = 40f;
+        //         basicStrikeRotation = false;
+        //     }
+        // }
 
         // //arrêt de la course
         // Keyboard keyboard = Keyboard.current;
@@ -208,7 +209,7 @@ public class PlayerController : MonoBehaviour
                 enemyHp.hp -= 1;
                 Debug.Log(enemyHp.hp);
                 basicStrikeRotation = true;
-                transform.rotation = Quaternion.Euler(0f, -45f, 0);
+                //transform.rotation = Quaternion.Euler(0f, -45f, 0);
                 if (enemyHp.hp <= 0)
                 {
                     if(enemyHp.tag == "Interactible"){
@@ -259,13 +260,21 @@ public class PlayerController : MonoBehaviour
                         bodyPart.material.SetFloat("_Glow", 0.661f);
                     Debug.Log("shiny head");
                 }
-                else if(newCollider.tag == "Interactible"){
+                if(newCollider.tag == "Interactible" && currentLevel == "Level0"){
                     //Debug.Log(RenderSettings.ambientIntensity);
                     askAudioManagerBowHighLight = true;
                     bowHighlighCounter --;
                     renderer.material.SetFloat("_Glow", 0.661f);
-                    Debug.Log(renderer.material);
                     //quand bow hightlighted, change la lumière de la scène de façon enchanteuse
+                    RenderSettings.ambientIntensity = Mathf.PingPong(Time.time * 2.35f, 5);
+                    //Debug.Log(RenderSettings.ambientIntensity);
+                    //rdrSettings.ambientIntensity = Mathf.PingPong(Time.time, 8); // pingpong change graduellement la lumière jusqu'à l'intensité demandé, 8 étant le maximum
+                }
+                if(newCollider.tag == "Interactible" && currentLevel == "Level2"){
+                    Debug.Log("ça marche");
+                    askAudioManagerBowHighLight = true;
+                    bowHighlighCounter --;
+                    renderer.material.SetFloat("_Glow", 15f);
                     RenderSettings.ambientIntensity = Mathf.PingPong(Time.time * 2.35f, 8);
                     //Debug.Log(RenderSettings.ambientIntensity);
                     //rdrSettings.ambientIntensity = Mathf.PingPong(Time.time, 8); // pingpong change graduellement la lumière jusqu'à l'intensité demandé, 8 étant le maximum

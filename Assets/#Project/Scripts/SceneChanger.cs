@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-
+    [SerializeField] private string sceneName;
     void OnTriggerEnter(Collider other){
         if(other.tag == "Player"){
-            SceneManager.LoadScene("SandBox"); 
+            SceneManager.LoadScene(sceneName); 
         } 
     }
 

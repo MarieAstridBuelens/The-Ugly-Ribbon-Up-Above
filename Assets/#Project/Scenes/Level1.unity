@@ -6021,6 +6021,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1700794610367121391, guid: 7411fc10deee91e46be46b4b5fcc0b39,
         type: 3}
+      propertyPath: sceneName
+      value: Level1 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700794610367121391, guid: 7411fc10deee91e46be46b4b5fcc0b39,
+        type: 3}
       propertyPath: whenLevelFinished.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
