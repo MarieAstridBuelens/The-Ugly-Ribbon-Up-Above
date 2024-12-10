@@ -28,7 +28,7 @@ public class HealthBarEnemy : MonoBehaviour
             healthBar.value = enemyHP.hp;
             savedHp = enemyHP.hp;
         }
-        if(savedHp ==0){
+        if(savedHp <=0){
             healthBar.gameObject.SetActive(false);
             savedHp = 10;
         }

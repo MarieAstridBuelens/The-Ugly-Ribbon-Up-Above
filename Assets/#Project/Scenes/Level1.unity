@@ -5686,6 +5686,11 @@ PrefabInstance:
       objectReference: {fileID: 1517559437}
     - target: {fileID: 7128313212728618150, guid: 93ab5849ae6c74942b5764cc381199fb,
         type: 3}
+      propertyPath: healthbar
+      value: 
+      objectReference: {fileID: 1523274529}
+    - target: {fileID: 7128313212728618150, guid: 93ab5849ae6c74942b5764cc381199fb,
+        type: 3}
       propertyPath: throwLine
       value: 
       objectReference: {fileID: 1069499371}

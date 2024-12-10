@@ -64,7 +64,7 @@ public class AudioManager : MonoBehaviour
             bowAudioSource.clip = navMeshObstacle.GetComponent<BowSound>().bowHighlighted;
             bowAudioSource.PlayOneShot(bowAudioSource.clip, 1f);
             playerController.askAudioManagerBowHighLight = false;
-            playerController.bowHighlighCounter = 900f;
+            playerController.bowHighlighCounter = 1100f;
         }
 
         if(playerController.bowIsDestroyed){
