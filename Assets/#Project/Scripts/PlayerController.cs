@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float turnSmoothVelocity;
     [SerializeField] private Transform cam;
     [SerializeField] private Transform shoulder;
+    [SerializeField] private GameObject healthbar;
 
     //InputAction run;
     InputAction move;
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
     internal string currentLevel = "Level0";
 
 
-    void OnEnable()
+    internal void OnEnable()
     {
         inputActions.FindActionMap("PlayerMap").Enable();
         // run = inputActions["Run"];
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour
         telekinesis = inputActions["Telekinesis"];
     }
 
-    void OnDisable()
+    internal void OnDisable()
     {
         inputActions.FindActionMap("PlayerMap").Disable();
         // run.performed -= OnSpace;
@@ -218,6 +219,7 @@ public class PlayerController : MonoBehaviour
                     savedTransform = enemyHp.transform;
                     enemyHp.gameObject.SetActive(false);
                     goLeftOversChrono = true;
+                    healthbar.SetActive(false);
                     //Destroy(hit.transform.gameObject);
                     //Debug.Log("Leftovers appear");
                 }
@@ -251,6 +253,7 @@ public class PlayerController : MonoBehaviour
             Collider coll = hit.collider.GetComponent<Collider>();
             if (coll.TryGetComponent(out Renderer renderer))
             {
+                healthbar.SetActive(true);
                 newCollider = hit.collider;
                 if(newCollider.tag == "Enemy"){
                     renderer.material.SetFloat("_Glow", 0.661f);
