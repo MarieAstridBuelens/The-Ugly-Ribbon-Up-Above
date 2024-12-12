@@ -1,5 +1,7 @@
+
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,10 +25,12 @@ public class HealthBarEnemy : MonoBehaviour
     {
         if(playerController.newCollider != null){
             healthBar.gameObject.SetActive(true);
-            enemyHP = playerController.newCollider.GetComponent<HealthManager>();
-            healthBar.maxValue = enemyHP.maxHP;
-            healthBar.value = enemyHP.hp;
-            savedHp = enemyHP.hp;
+            if(playerController.newCollider.TryGetComponent(out HealthManager enemyHP)){
+                healthBar.maxValue = enemyHP.maxHP;
+                healthBar.value = enemyHP.hp;
+                savedHp = enemyHP.hp;   
+            }
+            
         }
         if(savedHp <=0){
             healthBar.gameObject.SetActive(false);

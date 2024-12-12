@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
                     savedTransform = enemyHp.transform;
                     enemyHp.gameObject.SetActive(false);
                     goLeftOversChrono = true;
-                    healthbar.SetActive(false);
+                    //healthbar.SetActive(false);
                     //Destroy(hit.transform.gameObject);
                     //Debug.Log("Leftovers appear");
                 }
@@ -250,10 +250,10 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, deathRayLength))
         {
-            Collider coll = hit.collider.GetComponent<Collider>();
-            if (coll.TryGetComponent(out Renderer renderer))
+            Collider coll = hit.collider;
+            if (coll.TryGetComponent(out Renderer renderer) && (coll.CompareTag("Interactible") || coll.CompareTag("Enemy")))
             {
-                healthbar.SetActive(true);
+                //healthbar.SetActive(true);
                 newCollider = hit.collider;
                 if(newCollider.tag == "Enemy"){
                     renderer.material.SetFloat("_Glow", 0.661f);
