@@ -388,8 +388,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 3, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!65 &221636011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -409,8 +409,8 @@ BoxCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 3, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &289803453
 GameObject:
   m_ObjectHideFlags: 3
@@ -1262,7 +1262,7 @@ PrefabInstance:
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.211084
+      value: -14.07
       objectReference: {fileID: 0}
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
@@ -1272,12 +1272,12 @@ PrefabInstance:
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.2327776
+      value: 6.51
       objectReference: {fileID: 0}
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.0018021875
+      value: -0.002830251
       objectReference: {fileID: 0}
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
@@ -1287,7 +1287,7 @@ PrefabInstance:
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.9999984
+      value: -0.99999607
       objectReference: {fileID: 0}
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
@@ -1302,7 +1302,7 @@ PrefabInstance:
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -180.207
+      value: -180.324
       objectReference: {fileID: 0}
     - target: {fileID: 5617977427304431176, guid: 650f83b3d2dc4364bb7a4a243b3542bd,
         type: 3}
