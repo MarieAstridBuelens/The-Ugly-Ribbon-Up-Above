@@ -1550,6 +1550,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8f6103e4ff13b4408df1206ef1b6479, type: 3}
+--- !u!1 &299102864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 299102866}
+  - component: {fileID: 299102865}
+  m_Layer: 0
+  m_Name: SceneChangerAfterCinematic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &299102865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299102864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70177fb28f2d1564ea55518986faf836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: StartScreen
+--- !u!4 &299102866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299102864}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &310698525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4282368332992921786, guid: d8f6103e4ff13b4408df1206ef1b6479,
@@ -3595,6 +3640,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2436932727775314724, guid: 7767eeb6cddfc57479ff4a7f79758ae8,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6609293344536717770, guid: 7767eeb6cddfc57479ff4a7f79758ae8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5522,6 +5572,8 @@ PlayableDirector:
     value: {fileID: 847991125}
   - key: {fileID: 2973600305056957890, guid: 13652e8629fe134449ecb06714a67f3a, type: 2}
     value: {fileID: 677293849}
+  - key: {fileID: -9113233207235199664, guid: 13652e8629fe134449ecb06714a67f3a, type: 2}
+    value: {fileID: 299102864}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1163829041
@@ -9813,6 +9865,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1577540401641368255, guid: b7b15c5a3f0d1624c86c537b1194d815,
+        type: 3}
+      propertyPath: sceneName
+      value: StartScreen
+      objectReference: {fileID: 0}
     - target: {fileID: 3835034635737390344, guid: b7b15c5a3f0d1624c86c537b1194d815,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11071,3 +11128,4 @@ SceneRoots:
   - {fileID: 618028378}
   - {fileID: 1163829041}
   - {fileID: 1664678447}
+  - {fileID: 299102866}
