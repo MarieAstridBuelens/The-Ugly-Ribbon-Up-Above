@@ -15,6 +15,8 @@ public class DialogueTrigger : MonoBehaviour
     private int counter = 1000;
     private bool counterOn = false;
     private Collider gameObjectBoxCollider;
+    [SerializeField] AudioSource voiceAudioSource;
+
     
     void Start()
     {
@@ -30,6 +32,7 @@ public class DialogueTrigger : MonoBehaviour
             counterOn = true;
             tmp_dialogueBox.gameObject.SetActive(true);
             tmp_dialogueBox.text = txt;
+            voiceAudioSource.Play();
         }
     }
 

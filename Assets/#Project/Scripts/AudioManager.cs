@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] internal AudioSource nEvilSound;
     [SerializeField] internal AudioSource bowSound;
     [SerializeField] internal AudioSource daveSound;
+    [SerializeField] internal AudioSource voicesSound;
     internal PlayerController playerController;
     internal AudioSource playerAudioSource;
     internal int startingCounter = 620;
@@ -17,7 +18,7 @@ public class AudioManager : MonoBehaviour
     internal AudioSource[] allAudioSources;
     internal NavMeshObstacle navMeshObstacle;
     internal AudioSource bowAudioSource;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -86,4 +87,6 @@ public class AudioManager : MonoBehaviour
     //     Debug.Log("hit sound playing");
     //     basicStrikeSound.PlayOneShot(basicStrikeSound.clip, 1f);
     // }
+
+
 }
