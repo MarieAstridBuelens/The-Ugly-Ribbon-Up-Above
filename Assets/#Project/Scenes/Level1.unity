@@ -1546,7 +1546,7 @@ GameObject:
   - component: {fileID: 422888388}
   - component: {fileID: 422888387}
   m_Layer: 0
-  m_Name: AudioSourceTest
+  m_Name: AudioSourceVoices
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1736,6 +1736,11 @@ PrefabInstance:
       propertyPath: txt
       value: What... is... THAT?
       objectReference: {fileID: 0}
+    - target: {fileID: 8231568387362262706, guid: 13bd2e2b8c284654585f3e4ee0c42f29,
+        type: 3}
+      propertyPath: audioClipToGive
+      value: 
+      objectReference: {fileID: 8300000, guid: ca01bdd30da736348a6aa51d3da74bd8, type: 3}
     - target: {fileID: 8231568387362262706, guid: 13bd2e2b8c284654585f3e4ee0c42f29,
         type: 3}
       propertyPath: voiceAudioSource
@@ -3270,6 +3275,11 @@ PrefabInstance:
       propertyPath: txt
       value: There's something unusual here.
       objectReference: {fileID: 0}
+    - target: {fileID: 8231568387362262706, guid: 13bd2e2b8c284654585f3e4ee0c42f29,
+        type: 3}
+      propertyPath: audioClipToGive
+      value: 
+      objectReference: {fileID: 8300000, guid: fc969426871e8be47832125b7e0e1b50, type: 3}
     - target: {fileID: 8231568387362262706, guid: 13bd2e2b8c284654585f3e4ee0c42f29,
         type: 3}
       propertyPath: voiceAudioSource
@@ -6568,6 +6578,11 @@ PrefabInstance:
       propertyPath: txt
       value: Home sweet home.
       objectReference: {fileID: 0}
+    - target: {fileID: 8231568387362262706, guid: 13bd2e2b8c284654585f3e4ee0c42f29,
+        type: 3}
+      propertyPath: audioClipToGive
+      value: 
+      objectReference: {fileID: 8300000, guid: 71eb5e23b7c7acd4a992ff6137c26f2c, type: 3}
     - target: {fileID: 8231568387362262706, guid: 13bd2e2b8c284654585f3e4ee0c42f29,
         type: 3}
       propertyPath: voiceAudioSource
